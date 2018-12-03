@@ -105,7 +105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 const port = process.env.PORT || 5679;
 
-//
+
 const app = __WEBPACK_IMPORTED_MODULE_0_express___default()();
 //
 //config mongoose
@@ -116,9 +116,11 @@ db.once('open', function () {
   console.log(`[MongoDB] connected`);
 });
 //
+app.use(__WEBPACK_IMPORTED_MODULE_0_express___default.a.json());
+app.use(__WEBPACK_IMPORTED_MODULE_0_express___default.a.urlencoded());
 app.use(__WEBPACK_IMPORTED_MODULE_3_volleyball___default.a);
 app.use(__WEBPACK_IMPORTED_MODULE_2_cors___default()());
-app.use('/', __WEBPACK_IMPORTED_MODULE_4__routes_users__["a" /* default */]);
+app.use('/users', __WEBPACK_IMPORTED_MODULE_4__routes_users__["a" /* default */]);
 
 app.listen(port, () => {
   console.log(`[Express] running on port : ${port}`);
@@ -153,23 +155,19 @@ module.exports = require("volleyball");
 const userRouter = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router();
 
 //post un user
-userRouter.post('/users', (req, res) => {
+userRouter.post('/add', (req, res) => {
   const newUser = new __WEBPACK_IMPORTED_MODULE_1__models_User__["a" /* default */](req.body);
   console.log(req.body);
-
-  //let dateFormat = moment(req.body.createAt).format("MM-DD-YYYY")
-  //newUser.createAt = dateFormat
-
-  const saveUser = () => {
-    newUser.save((err, user) => {
-      if (err) res.send(err);
-      res.json(user);
-    });
-  };
+  let dateFormat = __WEBPACK_IMPORTED_MODULE_2_moment___default()(req.body.createAt).format("MM-DD-YYYY");
+  newUser.createAt = dateFormat;
+  newUser.save((err, user) => {
+    if (err) res.send(err);
+    res.json(user);
+  });
 });
 
 //tous les users
-userRouter.get('/users', (req, res) => {
+userRouter.get('/all', (req, res) => {
   __WEBPACK_IMPORTED_MODULE_1__models_User__["a" /* default */].find({}, (err, users) => {
     if (err) res.send(err);
     res.json(users);
@@ -225,10 +223,9 @@ const userSchema = new Schema({
   mail: { type: String, required: false },
   firstname: { type: String, required: false },
   lastname: { type: String, required: false },
-  // createAt: {type: Date, default:Date.now},
+  createAt: { type: Date, default: Date.now },
   avatarUrl: { type: String, required: false },
   address: { type: String, required: false }
-
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.model("User", userSchema));

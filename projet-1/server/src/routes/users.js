@@ -5,24 +5,19 @@ import moment from 'moment'
 const userRouter = express.Router()
 
 //post un user
-userRouter.post('/users', (req, res) => {
+userRouter.post('/add', (req, res) => {
   const newUser = new User(req.body);
   console.log(req.body)
-
-
-//let dateFormat = moment(req.body.createAt).format("MM-DD-YYYY")
-//newUser.createAt = dateFormat
-
-  const saveUser = () => {
+let dateFormat = moment(req.body.createAt).format("MM-DD-YYYY")
+newUser.createAt = dateFormat
     newUser.save((err, user) => {
       if(err) res.send(err)
       res.json(user)
     })
-  }
 })
 
 //tous les users
-userRouter.get('/users', (req, res) => {
+userRouter.get('/all', (req, res) => {
   User.find({}, (err, users) => {
     if(err) res.send(err)
     res.json(users)

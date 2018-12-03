@@ -2,9 +2,9 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"//pb header
 import volleyball from "volleyball"
- const port = process.env.PORT || 5679
+const port = process.env.PORT || 5679
 import userRouter from "./routes/users"
-//
+
 const app = express()
 //
 //config mongoose
@@ -15,9 +15,11 @@ db.once('open', function() {
   console.log(`[MongoDB] connected`);
 });
 //
+app.use(express.json())
+app.use(express.urlencoded())
 app.use(volleyball)
 app.use(cors())
-app.use('/', userRouter)
+app.use('/users', userRouter)
 
 
 
