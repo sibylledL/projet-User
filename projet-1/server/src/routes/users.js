@@ -34,7 +34,7 @@ userRouter.get('/:id', (req, res) => {//c'est un paramètre id: l'id qu'on rentr
 })
 
 //edit
-userRouter.post('/:id', (req, res) => {
+userRouter.post('/edit/:id', (req, res) => {
   console.log(req.body)
   // if(!req.body){
   //   return res.sendStatus(500);
@@ -49,7 +49,8 @@ userRouter.post('/:id', (req, res) => {
 });
 
 //delete
-userRouter.get('/delete/:id', (req, res) => {
+userRouter.delete('/delete/:id', (req, res) => {
+  console.log('delete')
   let query = {_id:req.params.id}
   User.findByIdAndRemove(query, (err) => {
     if(err) res.send(err)

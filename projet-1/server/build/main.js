@@ -184,7 +184,7 @@ userRouter.get('/:id', (req, res) => {
 });
 
 //edit
-userRouter.post('/:id', (req, res) => {
+userRouter.post('/edit/:id', (req, res) => {
   console.log(req.body);
   // if(!req.body){
   //   return res.sendStatus(500);
@@ -199,7 +199,8 @@ userRouter.post('/:id', (req, res) => {
 });
 
 //delete
-userRouter.get('/delete/:id', (req, res) => {
+userRouter.delete('/delete/:id', (req, res) => {
+  console.log('delete');
   let query = { _id: req.params.id };
   __WEBPACK_IMPORTED_MODULE_1__models_User__["a" /* default */].findByIdAndRemove(query, err => {
     if (err) res.send(err);
