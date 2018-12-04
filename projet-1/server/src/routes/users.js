@@ -36,9 +36,6 @@ userRouter.get('/:id', (req, res) => {//c'est un paramètre id: l'id qu'on rentr
 //edit
 userRouter.post('/edit/:id', (req, res) => {
   console.log(req.body)
-  // if(!req.body){
-  //   return res.sendStatus(500);
-  // }
   User.findByIdAndUpdate({_id: req.params.id}, req.body, (err, user) => {
     if(err) {
       console.log(error)

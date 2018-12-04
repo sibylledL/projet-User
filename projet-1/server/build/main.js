@@ -186,9 +186,6 @@ userRouter.get('/:id', (req, res) => {
 //edit
 userRouter.post('/edit/:id', (req, res) => {
   console.log(req.body);
-  // if(!req.body){
-  //   return res.sendStatus(500);
-  // }
   __WEBPACK_IMPORTED_MODULE_1__models_User__["a" /* default */].findByIdAndUpdate({ _id: req.params.id }, req.body, (err, user) => {
     if (err) {
       console.log(error);

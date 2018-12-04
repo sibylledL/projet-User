@@ -70,7 +70,7 @@ class User extends Component {
   render () {
     const user = this.state.user
     const renderUser = () => {
-      if(this.state.user && this.state.edit){
+      if(this.state.user && !this.state.edit){
         return(
         <div>
           <p>{user.firstname} {user.lastname}</p>
@@ -83,8 +83,10 @@ class User extends Component {
         </div>
       )
     }else if(this.state.user){
+      const url = "http://localhost:5679/users"
         return(
           <div>
+            <form method="POST" action={`${url}/edit/${user.id}`}>
             <input name="firstname" type="text" defaultValue={user.firstname} onChange={this.recordChanges}/><br/>
             <input name="lastname" type="text" defaultValue={user.lastname} onChange={this.recordChanges}/><br/>
             <input name="mail" type="text" defaultValue={user.mail} onChange={this.recordChanges}/><br/>
@@ -92,7 +94,8 @@ class User extends Component {
             <input name="avatarUrl" type="text" defaultValue={user.avatarUrl} onChange={this.recordChanges}/><br/>
             <input name="createAt" type="date" defaultValue={user.createAt} onChange={this.recordChanges}/><br/>
             <span onClick={this.deleteUser}>DELETE</span><br/>
-            <span onClick={this.toggleEdit}>EDIT</span>
+            <button type="submit" onClick={this.toggleEdit}>Save</button>
+            </form>
           </div>
         )
       }
